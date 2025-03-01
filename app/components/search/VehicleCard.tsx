@@ -39,9 +39,9 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   );
 
   return (
-    <Card key={vehicle.id} className="w-full">
+    <Card key={vehicle.id} className="w-full" role="article" aria-labelledby={`vehicle-title-${vehicle.id}`}>
       <CardHeader>
-        <CardTitle className="text-xl">
+        <CardTitle className="text-xl" id={`vehicle-title-${vehicle.id}`}>
           {vehicle.make} {vehicle.model}
         </CardTitle>
       </CardHeader>
@@ -49,36 +49,40 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         <div className="aspect-video w-full overflow-hidden rounded-lg bg-muted">
           <img
             src={vehicle.thumbnail_url}
-            alt={`${vehicle.make} ${vehicle.model}`}
             className="h-full w-full object-cover"
+            alt={`image of ${vehicle.make} ${vehicle.model}`}
           />
         </div>
-        <div className="grid  gap-3">
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Class:</span>
-              <span className="font-medium">{vehicle.classification}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Passengers:</span>
-              <span className="font-medium">{vehicle.max_passengers}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Doors:</span>
-              <span className="font-medium">{vehicle.doors}</span>
-            </div>
+        <div className="grid gap-3" role="list" aria-label="Vehicle specifications">
+          <div className="space-y-2" role="listitem">
+            <dl>
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Class:</dt>
+                <dd className="font-medium">{vehicle.classification}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Passengers:</dt>
+                <dd className="font-medium">{vehicle.max_passengers}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Doors:</dt>
+                <dd className="font-medium">{vehicle.doors}</dd>
+              </div>
+            </dl>
           </div>
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Year:</span>
-              <span className="font-medium">{vehicle.year}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Hourly Rate:</span>
-              <span className="font-medium">
-                ${(vehicle.hourly_rate_cents / 100).toFixed(2)}
-              </span>
-            </div>
+          <div className="space-y-2" role="listitem">
+            <dl>
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Year:</dt>
+                <dd className="font-medium">{vehicle.year}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Hourly Rate:</dt>
+                <dd className="font-medium">
+                  ${(vehicle.hourly_rate_cents / 100).toFixed(2)}
+                </dd>
+              </div>
+            </dl>
           </div>
         </div>
       </CardContent>
@@ -89,6 +93,7 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
               pathname: "review",
               search: bookNowParams.toString(),
             }}
+            aria-label={`Reserve ${vehicle.year} ${vehicle.make} ${vehicle.model} at $${(vehicle.hourly_rate_cents / 100).toFixed(2)} per hour`}
           >
             Reserve now
           </Link>

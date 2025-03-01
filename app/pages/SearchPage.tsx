@@ -55,50 +55,50 @@ export function SearchPage() {
   );
 
   return (
-    <Form {...form}>
+    <Form {...form} aria-label="Vehicle search">
       <div className="container mx-auto flex flex-col">
         <div className="grid grid-cols-12 grid-flow-row">
-          <div className="pt-12 pb-4 border-b grid grid-cols-subgrid col-span-12 md:sticky top-0 bg-background/80 backdrop-blur-md z-10">
+          <header className="pt-12 pb-4 border-b grid grid-cols-subgrid col-span-12 md:sticky top-0 bg-background/80 backdrop-blur-md z-10">
             <div className="px-4 flex items-end col-span-12 md:col-span-3">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Workoast Wheels
               </h1>
             </div>
-            <div className="px-4 col-span-12 md:col-span-9 mt-4 md:mt-0">
+            <div className="px-4 col-span-12 md:col-span-9 mt-4 md:mt-0" aria-label="Time range filters">
               <TimeRangeFilters />
             </div>
-          </div>
+          </header>
 
-          <div className="col-span-12 md:col-span-3 px-4 md:py-8">
+          <aside className="col-span-12 md:col-span-3 px-4 md:py-8" aria-label="Search filters">
             <div className="md:hidden mt-4">
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline">Filters</Button>
+                  <Button variant="outline" aria-label="Open filters menu">Filters</Button>
                 </SheetTrigger>
-                <SheetContent>{filters}</SheetContent>
+                <SheetContent aria-label="Filter options">{filters}</SheetContent>
               </Sheet>
             </div>
-            <div className="hidden md:block">{filters}</div>
-          </div>
+            <div className="hidden md:block" role="complementary">{filters}</div>
+          </aside>
 
-          <div className="col-span-12 md:col-span-9 px-4 py-8">
+          <main className="col-span-12 md:col-span-9 px-4 py-8">
             <ErrorBoundary
               fallback={<ErrorFallback message="Failed to load vehicles" />}
             >
               <Suspense
                 fallback={
-                  <div className="flex flex-col gap-4">
-                    <Skeleton className="w-full h-[178px] rounded" />
-                    <Skeleton className="w-full h-[178px] rounded" />
-                    <Skeleton className="w-full h-[178px] rounded" />
-                    <Skeleton className="w-full h-[178px] rounded" />
+                  <div className="flex flex-col gap-4" aria-label="Loading vehicles">
+                    <Skeleton className="w-full h-[178px] rounded" aria-hidden="true" />
+                    <Skeleton className="w-full h-[178px] rounded" aria-hidden="true" />
+                    <Skeleton className="w-full h-[178px] rounded" aria-hidden="true" />
+                    <Skeleton className="w-full h-[178px] rounded" aria-hidden="true" />
                   </div>
                 }
               >
                 <VehicleList />
               </Suspense>
             </ErrorBoundary>
-          </div>
+          </main>
         </div>
       </div>
     </Form>

@@ -54,7 +54,7 @@ export function AdditionalFilters() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" role="group" aria-label="Additional search filters">
       <FormField
         control={form.control}
         name="price"
@@ -69,10 +69,12 @@ export function AdditionalFilters() {
                 value={localPriceRange}
                 onValueChange={handlePriceChange}
                 className="w-full"
+                aria-label="Price range selector"
+                aria-valuetext={`Price range from $${localPriceRange[0]} to $${localPriceRange[1]}`}
               />
-              <div className="flex justify-between mt-2 text-sm text-muted-foreground">
-                <span>${localPriceRange[0]}</span>
-                <span>${localPriceRange[1]}</span>
+              <div className="flex justify-between mt-2 text-sm text-muted-foreground" aria-live="polite">
+                <span aria-label="Minimum price">${localPriceRange[0]}</span>
+                <span aria-label="Maximum price">${localPriceRange[1]}</span>
               </div>
             </div>
           </FormItem>
@@ -88,13 +90,18 @@ export function AdditionalFilters() {
             <Select
               value={field.value.toString()}
               onValueChange={(value) => field.onChange(parseInt(value))}
+              aria-label="Select minimum number of passengers"
             >
-              <SelectTrigger>
+              <SelectTrigger aria-label={`Currently selected: ${field.value} passengers`}>
                 <SelectValue placeholder="Select minimum passengers" />
               </SelectTrigger>
               <SelectContent>
                 {optionsResponse.passengerCounts.map((count: number) => (
-                  <SelectItem key={count} value={count.toString()}>
+                  <SelectItem 
+                    key={count} 
+                    value={count.toString()}
+                    aria-label={`${count} passengers`}
+                  >
                     {count} passengers
                   </SelectItem>
                 ))}
@@ -115,19 +122,26 @@ export function AdditionalFilters() {
                 <Button
                   variant="outline"
                   role="combobox"
+                  aria-label="Select vehicle classes"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-controls="vehicle-class-listbox"
                   className="w-full justify-between"
                 >
                   {field.value.length > 0
-                    ? `${field.value.length} selected`
+                    ? `${field.value.length} vehicle classes selected`
                     : "Select vehicle classes"}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" aria-hidden="true" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-full p-0">
                 <Command>
-                  <CommandInput placeholder="Search vehicle class..." />
+                  <CommandInput 
+                    placeholder="Search vehicle class..." 
+                    aria-label="Search vehicle classes"
+                  />
                   <CommandEmpty>No vehicle class found.</CommandEmpty>
-                  <CommandGroup>
+                  <CommandGroup id="vehicle-class-listbox">
                     <ScrollArea className="h-64">
                       {optionsResponse.classifications.map((classification) => (
                         <CommandItem
@@ -138,6 +152,8 @@ export function AdditionalFilters() {
                               : [...field.value, classification];
                             field.onChange(newValue);
                           }}
+                          aria-selected={field.value.includes(classification)}
+                          role="option"
                         >
                           <Check
                             className={cn(
@@ -146,6 +162,7 @@ export function AdditionalFilters() {
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}
+                            aria-hidden="true"
                           />
                           {classification}
                         </CommandItem>
@@ -156,7 +173,11 @@ export function AdditionalFilters() {
               </PopoverContent>
             </Popover>
             {field.value.length > 0 && (
-              <div className="flex gap-2 flex-wrap mt-2">
+              <div 
+                className="flex gap-2 flex-wrap mt-2" 
+                role="list" 
+                aria-label="Selected vehicle classes"
+              >
                 {field.value.map((item) => (
                   <Badge
                     key={item}
@@ -165,6 +186,8 @@ export function AdditionalFilters() {
                     onClick={() =>
                       field.onChange(field.value.filter((x) => x !== item))
                     }
+                    role="listitem"
+                    aria-label={`Remove ${item}`}
                   >
                     {item} ×
                   </Badge>
@@ -186,19 +209,26 @@ export function AdditionalFilters() {
                 <Button
                   variant="outline"
                   role="combobox"
+                  aria-label="Select vehicle makes"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-controls="vehicle-make-listbox"
                   className="w-full justify-between"
                 >
                   {field.value.length > 0
-                    ? `${field.value.length} selected`
+                    ? `${field.value.length} vehicle makes selected`
                     : "Select vehicle makes"}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" aria-hidden="true" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-full p-0">
                 <Command>
-                  <CommandInput placeholder="Search vehicle make..." />
+                  <CommandInput 
+                    placeholder="Search vehicle make..." 
+                    aria-label="Search vehicle makes"
+                  />
                   <CommandEmpty>No vehicle make found.</CommandEmpty>
-                  <CommandGroup>
+                  <CommandGroup id="vehicle-make-listbox">
                     <ScrollArea className="h-64">
                       {optionsResponse.makes.map((make) => (
                         <CommandItem
@@ -209,6 +239,8 @@ export function AdditionalFilters() {
                               : [...field.value, make];
                             field.onChange(newValue);
                           }}
+                          aria-selected={field.value.includes(make)}
+                          role="option"
                         >
                           <Check
                             className={cn(
@@ -217,6 +249,7 @@ export function AdditionalFilters() {
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}
+                            aria-hidden="true"
                           />
                           {make}
                         </CommandItem>
@@ -227,7 +260,11 @@ export function AdditionalFilters() {
               </PopoverContent>
             </Popover>
             {field.value.length > 0 && (
-              <div className="flex gap-2 flex-wrap mt-2">
+              <div 
+                className="flex gap-2 flex-wrap mt-2" 
+                role="list" 
+                aria-label="Selected vehicle makes"
+              >
                 {field.value.map((item) => (
                   <Badge
                     key={item}
@@ -236,6 +273,8 @@ export function AdditionalFilters() {
                     onClick={() =>
                       field.onChange(field.value.filter((x) => x !== item))
                     }
+                    role="listitem"
+                    aria-label={`Remove ${item}`}
                   >
                     {item} ×
                   </Badge>

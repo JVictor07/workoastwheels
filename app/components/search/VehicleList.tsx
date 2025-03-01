@@ -69,7 +69,11 @@ export function VehicleList() {
 
   if (searchResponse.vehicles.length === 0) {
     return (
-      <div className="flex justify-center items-center h-32">
+      <div 
+        className="flex justify-center items-center h-32"
+        role="status"
+        aria-live="polite"
+      >
         <p className="text-muted-foreground">
           No vehicles found. Try adjusting your search criteria.
         </p>
@@ -78,8 +82,12 @@ export function VehicleList() {
   }
 
   return (
-    <div>
-      <div className="mb-4 text-sm text-muted-foreground">
+    <section aria-label="Vehicle search results">
+      <div 
+        className="mb-4 text-sm text-muted-foreground"
+        role="status"
+        aria-live="polite"
+      >
         {searchResponse.pagination.totalItems === 0 ? (
           "No vehicles found"
         ) : searchResponse.pagination.totalItems === 1 ? (
@@ -88,14 +96,22 @@ export function VehicleList() {
           `${searchResponse.pagination.totalItems} vehicles found`
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div 
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        role="list"
+        aria-label="Available vehicles"
+      >
         {searchResponse.vehicles.map((vehicle: Vehicle) => {
           return (
-            <VehicleCard key={vehicle.id} vehicle={vehicle} />
+            <div key={vehicle.id} role="listitem">
+              <VehicleCard vehicle={vehicle} />
+            </div>
           );
         })}
       </div>
-      <PaginationButtons data={searchResponse.pagination} />
-    </div>
+      <nav aria-label="Search results pagination">
+        <PaginationButtons data={searchResponse.pagination} />
+      </nav>
+    </section>
   );
 }

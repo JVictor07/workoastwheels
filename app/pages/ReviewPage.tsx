@@ -13,8 +13,12 @@ import { ErrorFallback } from "@/components/ErrorFallback";
 
 function Timeline({ startDate, endDate }: { startDate: Date; endDate: Date }) {
   return (
-    <div className="flex relative">
-      <div className="absolute top-1.5 bottom-1.5 flex flex-col items-center">
+    <div 
+      className="flex relative"
+      role="region"
+      aria-label="Rental timeline"
+    >
+      <div className="absolute top-1.5 bottom-1.5 flex flex-col items-center" aria-hidden="true">
         <div className="w-3 h-3 bg-blue-500 rounded-full border-2 border-white ring-1 z-10 ring-blue-400"></div>
         <div className="flex-grow border-l-2 border-dotted border-gray-300"></div>
         <div className="w-3 h-3 bg-blue-500 rounded-full border-2 border-white ring-1 z-10 ring-blue-400"></div>
@@ -23,15 +27,15 @@ function Timeline({ startDate, endDate }: { startDate: Date; endDate: Date }) {
       </div>
       <div className="flex flex-col justify-between gap-4 h-full ml-8">
         <div>
-          <span className="text-sm text-gray-600">Pick-up</span>
-          <p className="font-medium">{format(startDate, "PPpp")}</p>
+          <span className="text-sm text-gray-600" id="pickup-label">Pick-up</span>
+          <p className="font-medium" aria-labelledby="pickup-label">{format(startDate, "PPpp")}</p>
         </div>
         <div>
           <p className="text-sm text-gray-600">Rental period</p>
         </div>
         <div>
-          <span className="text-sm text-gray-600">Drop-off</span>
-          <p className="font-medium">{format(endDate, "PPpp")}</p>
+          <span className="text-sm text-gray-600" id="dropoff-label">Drop-off</span>
+          <p className="font-medium" aria-labelledby="dropoff-label">{format(endDate, "PPpp")}</p>
         </div>
       </div>
     </div>
@@ -89,13 +93,13 @@ function Content() {
 
       <Separator />
 
-      <div className="space-y-6">
-        <h3 className="text-2xl font-semibold mb-4">Reservation Summary</h3>
+      <section className="space-y-6" aria-labelledby="summary-title">
+        <h3 id="summary-title" className="text-2xl font-semibold mb-4">Reservation Summary</h3>
         <div className="grid grid-cols-2 gap-6">
-          <dl className="space-y-4">
+          <dl className="space-y-4" aria-label="Reservation details">
             <div>
-              <dt className="text-sm text-gray-600">Hourly Rate</dt>
-              <dd>
+              <dt className="text-sm text-gray-600" id="rate-label">Hourly Rate</dt>
+              <dd aria-labelledby="rate-label">
                 <span className="text-lg">
                   {formatCents(vehicle.hourly_rate_cents)}
                 </span>
@@ -103,12 +107,12 @@ function Content() {
               </dd>
             </div>
             <div>
-              <dt className="text-sm text-gray-600">Duration</dt>
-              <dd>{formattedDuration}</dd>
+              <dt className="text-sm text-gray-600" id="duration-label">Duration</dt>
+              <dd aria-labelledby="duration-label">{formattedDuration}</dd>
             </div>
             <div>
-              <dt className="text-sm text-gray-600">Total Cost</dt>
-              <dd className="text-2xl font-medium tracking-tight">
+              <dt className="text-sm text-gray-600" id="total-label">Total Cost</dt>
+              <dd className="text-2xl font-medium tracking-tight" aria-labelledby="total-label">
                 {formatCents(quote?.totalPriceCents || 0)}
               </dd>
             </div>
@@ -117,10 +121,15 @@ function Content() {
           <Timeline startDate={startDate} endDate={endDate} />
         </div>
 
-        <Button size="lg" className="w-full" onClick={handleConfirm}>
+        <Button 
+          size="lg" 
+          className="w-full" 
+          onClick={handleConfirm}
+          aria-label="Confirm reservation and proceed to payment"
+        >
           Confirm reservation
         </Button>
-      </div>
+      </section>
     </div>
   );
 }
@@ -136,10 +145,15 @@ export function ReviewPage() {
       >
         <Suspense
           fallback={
-            <div className="flex flex-col gap-4">
+            <div 
+              className="flex flex-col gap-4"
+              role="status"
+              aria-label="Loading reservation details"
+            >
               <Skeleton className="w-full h-[178px] rounded" />
               <Skeleton className="w-full h-[178px] rounded" />
               <Skeleton className="w-full h-[178px] rounded" />
+              <div className="sr-only">Loading reservation details...</div>
             </div>
           }
         >
