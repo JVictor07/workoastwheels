@@ -64,21 +64,33 @@ export function SearchPage() {
                 Workoast Wheels
               </h1>
             </div>
-            <div className="px-4 col-span-12 md:col-span-9 mt-4 md:mt-0" aria-label="Time range filters">
+            <div
+              className="px-4 col-span-12 md:col-span-9 mt-4 md:mt-0"
+              aria-label="Time range filters"
+            >
               <TimeRangeFilters />
             </div>
           </header>
 
-          <aside className="col-span-12 md:col-span-3 px-4 md:py-8" aria-label="Search filters">
+          <aside
+            className="col-span-12 md:col-span-3 px-4 md:py-8"
+            aria-label="Search filters"
+          >
             <div className="md:hidden mt-4">
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" aria-label="Open filters menu">Filters</Button>
+                  <Button variant="outline" aria-label="Open filters menu">
+                    Filters
+                  </Button>
                 </SheetTrigger>
-                <SheetContent aria-label="Filter options">{filters}</SheetContent>
+                <SheetContent aria-label="Filter options">
+                  {filters}
+                </SheetContent>
               </Sheet>
             </div>
-            <div className="hidden md:block" role="complementary">{filters}</div>
+            <div className="hidden md:block" role="complementary">
+              {filters}
+            </div>
           </aside>
 
           <main className="col-span-12 md:col-span-9 px-4 py-8">
@@ -87,11 +99,26 @@ export function SearchPage() {
             >
               <Suspense
                 fallback={
-                  <div className="flex flex-col gap-4" aria-label="Loading vehicles">
-                    <Skeleton className="w-full h-[178px] rounded" aria-hidden="true" />
-                    <Skeleton className="w-full h-[178px] rounded" aria-hidden="true" />
-                    <Skeleton className="w-full h-[178px] rounded" aria-hidden="true" />
-                    <Skeleton className="w-full h-[178px] rounded" aria-hidden="true" />
+                  <div
+                    className="flex flex-col gap-4"
+                    aria-label="Loading vehicles"
+                  >
+                    <Skeleton
+                      className="w-full h-[178px] rounded"
+                      aria-hidden="true"
+                    />
+                    <Skeleton
+                      className="w-full h-[178px] rounded"
+                      aria-hidden="true"
+                    />
+                    <Skeleton
+                      className="w-full h-[178px] rounded"
+                      aria-hidden="true"
+                    />
+                    <Skeleton
+                      className="w-full h-[178px] rounded"
+                      aria-hidden="true"
+                    />
                   </div>
                 }
               >

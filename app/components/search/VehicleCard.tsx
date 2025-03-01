@@ -21,29 +21,30 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
 
   const startDateTime = useMemo(
     () => combineDateTime(startDate, startTime),
-    [startDate, startTime]
+    [startDate, startTime],
   );
 
   const endDateTime = useMemo(
     () => combineDateTime(endDate, endTime),
-    [endDate, endTime]
+    [endDate, endTime],
   );
 
   const bookNowParams = useMemo(
-    () => new URLSearchParams({
-      id: vehicle.id,
-      start: startDateTime.toISOString(),
-      end: endDateTime.toISOString(),
-    }),
-    [vehicle.id, startDateTime, endDateTime]
+    () =>
+      new URLSearchParams({
+        id: vehicle.id,
+        start: startDateTime.toISOString(),
+        end: endDateTime.toISOString(),
+      }),
+    [vehicle.id, startDateTime, endDateTime],
   );
 
   return (
-    <Card 
-      role="article" 
-      key={vehicle.id} 
+    <Card
+      role="article"
+      key={vehicle.id}
       aria-labelledby={`vehicle-title-${vehicle.id}`}
-      className="w-full transition-all duration-300 ease-in-out border hover:border-black/50 hover:shadow-md" 
+      className="w-full transition-all duration-300 ease-in-out border hover:border-black/50 hover:shadow-md"
     >
       <CardHeader>
         <CardTitle className="text-xl" id={`vehicle-title-${vehicle.id}`}>
@@ -58,7 +59,11 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             alt={`image of ${vehicle.make} ${vehicle.model}`}
           />
         </div>
-        <div className="grid gap-3" role="list" aria-label="Vehicle specifications">
+        <div
+          className="grid gap-3"
+          role="list"
+          aria-label="Vehicle specifications"
+        >
           <div className="space-y-2" role="listitem">
             <dl>
               <div className="flex justify-between">

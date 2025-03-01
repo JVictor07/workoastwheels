@@ -38,14 +38,17 @@ interface VehicleOptions {
 
 export function AdditionalFilters() {
   const form = useFormContext<FormValues>();
-  const [localPriceRange, setLocalPriceRange] = useState(form.getValues("price"));
-  const [optionsResponse] = trpc.vehicles.options.useSuspenseQuery<VehicleOptions>();
+  const [localPriceRange, setLocalPriceRange] = useState(
+    form.getValues("price"),
+  );
+  const [optionsResponse] =
+    trpc.vehicles.options.useSuspenseQuery<VehicleOptions>();
 
   const debouncedFormPriceChange = useDebouncedCallback(
     (value: [number, number]) => {
       form.setValue("price", value);
     },
-    500
+    500,
   );
 
   const handlePriceChange = (value: [number, number]) => {
@@ -54,7 +57,11 @@ export function AdditionalFilters() {
   };
 
   return (
-    <div className="space-y-6" role="group" aria-label="Additional search filters">
+    <div
+      className="space-y-6"
+      role="group"
+      aria-label="Additional search filters"
+    >
       <FormField
         control={form.control}
         name="price"
@@ -72,7 +79,10 @@ export function AdditionalFilters() {
                 aria-label="Price range selector"
                 aria-valuetext={`Price range from $${localPriceRange[0]} to $${localPriceRange[1]}`}
               />
-              <div className="flex justify-between mt-2 text-sm text-muted-foreground" aria-live="polite">
+              <div
+                className="flex justify-between mt-2 text-sm text-muted-foreground"
+                aria-live="polite"
+              >
                 <span aria-label="Minimum price">${localPriceRange[0]}</span>
                 <span aria-label="Maximum price">${localPriceRange[1]}</span>
               </div>
@@ -92,13 +102,15 @@ export function AdditionalFilters() {
               onValueChange={(value) => field.onChange(parseInt(value))}
               aria-label="Select minimum number of passengers"
             >
-              <SelectTrigger aria-label={`Currently selected: ${field.value} passengers`}>
+              <SelectTrigger
+                aria-label={`Currently selected: ${field.value} passengers`}
+              >
                 <SelectValue placeholder="Select minimum passengers" />
               </SelectTrigger>
               <SelectContent>
                 {optionsResponse.passengerCounts.map((count: number) => (
-                  <SelectItem 
-                    key={count} 
+                  <SelectItem
+                    key={count}
                     value={count.toString()}
                     aria-label={`${count} passengers`}
                   >
@@ -131,13 +143,16 @@ export function AdditionalFilters() {
                   {field.value.length > 0
                     ? `${field.value.length} vehicle classes selected`
                     : "Select vehicle classes"}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" aria-hidden="true" />
+                  <ChevronsUpDown
+                    className="ml-2 h-4 w-4 shrink-0 opacity-50"
+                    aria-hidden="true"
+                  />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-full p-0">
                 <Command>
-                  <CommandInput 
-                    placeholder="Search vehicle class..." 
+                  <CommandInput
+                    placeholder="Search vehicle class..."
                     aria-label="Search vehicle classes"
                   />
                   <CommandEmpty>No vehicle class found.</CommandEmpty>
@@ -147,7 +162,9 @@ export function AdditionalFilters() {
                         <CommandItem
                           key={classification}
                           onSelect={() => {
-                            const newValue = field.value.includes(classification)
+                            const newValue = field.value.includes(
+                              classification,
+                            )
                               ? field.value.filter((x) => x !== classification)
                               : [...field.value, classification];
                             field.onChange(newValue);
@@ -160,7 +177,7 @@ export function AdditionalFilters() {
                               "mr-2 h-4 w-4",
                               field.value.includes(classification)
                                 ? "opacity-100"
-                                : "opacity-0"
+                                : "opacity-0",
                             )}
                             aria-hidden="true"
                           />
@@ -173,9 +190,9 @@ export function AdditionalFilters() {
               </PopoverContent>
             </Popover>
             {field.value.length > 0 && (
-              <div 
-                className="flex gap-2 flex-wrap mt-2" 
-                role="list" 
+              <div
+                className="flex gap-2 flex-wrap mt-2"
+                role="list"
                 aria-label="Selected vehicle classes"
               >
                 {field.value.map((item) => (
@@ -218,13 +235,16 @@ export function AdditionalFilters() {
                   {field.value.length > 0
                     ? `${field.value.length} vehicle makes selected`
                     : "Select vehicle makes"}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" aria-hidden="true" />
+                  <ChevronsUpDown
+                    className="ml-2 h-4 w-4 shrink-0 opacity-50"
+                    aria-hidden="true"
+                  />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-full p-0">
                 <Command>
-                  <CommandInput 
-                    placeholder="Search vehicle make..." 
+                  <CommandInput
+                    placeholder="Search vehicle make..."
                     aria-label="Search vehicle makes"
                   />
                   <CommandEmpty>No vehicle make found.</CommandEmpty>
@@ -247,7 +267,7 @@ export function AdditionalFilters() {
                               "mr-2 h-4 w-4",
                               field.value.includes(make)
                                 ? "opacity-100"
-                                : "opacity-0"
+                                : "opacity-0",
                             )}
                             aria-hidden="true"
                           />
@@ -260,9 +280,9 @@ export function AdditionalFilters() {
               </PopoverContent>
             </Popover>
             {field.value.length > 0 && (
-              <div 
-                className="flex gap-2 flex-wrap mt-2" 
-                role="list" 
+              <div
+                className="flex gap-2 flex-wrap mt-2"
+                role="list"
                 aria-label="Selected vehicle makes"
               >
                 {field.value.map((item) => (

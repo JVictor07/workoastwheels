@@ -53,9 +53,9 @@ export function TimeRangeFilters() {
   const endTimeOptions = useMemo(() => getTimeOptions(endDate), [endDate]);
 
   return (
-    <div 
-      className="grid grid-cols-2 lg:grid-cols-4 gap-6" 
-      role="group" 
+    <div
+      className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+      role="group"
       aria-label="Rental period selection"
     >
       <FormField
@@ -74,7 +74,11 @@ export function TimeRangeFilters() {
                         "flex w-full gap-4 pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground",
                       )}
-                      aria-label={field.value ? `Selected pick-up date: ${format(field.value, "PPP")}` : "Select pick-up date"}
+                      aria-label={
+                        field.value
+                          ? `Selected pick-up date: ${format(field.value, "PPP")}`
+                          : "Select pick-up date"
+                      }
                       aria-expanded="false"
                       aria-haspopup="dialog"
                     >
@@ -83,11 +87,19 @@ export function TimeRangeFilters() {
                       ) : (
                         <span>Pick a date</span>
                       )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" aria-hidden="true" />
+                      <CalendarIcon
+                        className="ml-auto h-4 w-4 opacity-50"
+                        aria-hidden="true"
+                      />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start" role="dialog" aria-label="Date picker">
+                <PopoverContent
+                  className="w-auto p-0"
+                  align="start"
+                  role="dialog"
+                  aria-label="Date picker"
+                >
                   <Calendar
                     mode="single"
                     selected={field.value}
@@ -118,8 +130,8 @@ export function TimeRangeFilters() {
           <FormItem>
             <FormLabel>Pick-up time</FormLabel>
             <FormControl>
-              <Select 
-                onValueChange={field.onChange} 
+              <Select
+                onValueChange={field.onChange}
                 defaultValue={field.value}
                 aria-label="Select pick-up time"
               >
@@ -132,7 +144,11 @@ export function TimeRangeFilters() {
                       key={time.value}
                       value={time.value}
                       disabled={time.isDisabled}
-                      aria-label={time.isDisabled ? `${time.label} - unavailable` : time.label}
+                      aria-label={
+                        time.isDisabled
+                          ? `${time.label} - unavailable`
+                          : time.label
+                      }
                     >
                       {time.label}
                     </SelectItem>
@@ -159,7 +175,11 @@ export function TimeRangeFilters() {
                         "flex w-full gap-4 pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground",
                       )}
-                      aria-label={field.value ? `Selected drop-off date: ${format(field.value, "PPP")}` : "Select drop-off date"}
+                      aria-label={
+                        field.value
+                          ? `Selected drop-off date: ${format(field.value, "PPP")}`
+                          : "Select drop-off date"
+                      }
                       aria-expanded="false"
                       aria-haspopup="dialog"
                     >
@@ -168,11 +188,19 @@ export function TimeRangeFilters() {
                       ) : (
                         <span>Pick a date</span>
                       )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" aria-hidden="true" />
+                      <CalendarIcon
+                        className="ml-auto h-4 w-4 opacity-50"
+                        aria-hidden="true"
+                      />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start" role="dialog" aria-label="Date picker">
+                <PopoverContent
+                  className="w-auto p-0"
+                  align="start"
+                  role="dialog"
+                  aria-label="Date picker"
+                >
                   <Calendar
                     mode="single"
                     selected={field.value}
@@ -203,8 +231,8 @@ export function TimeRangeFilters() {
           <FormItem>
             <FormLabel>Drop-off time</FormLabel>
             <FormControl>
-              <Select 
-                onValueChange={field.onChange} 
+              <Select
+                onValueChange={field.onChange}
                 defaultValue={field.value}
                 aria-label="Select drop-off time"
               >
@@ -217,7 +245,11 @@ export function TimeRangeFilters() {
                       key={time.value}
                       value={time.value}
                       disabled={time.isDisabled}
-                      aria-label={time.isDisabled ? `${time.label} - unavailable` : time.label}
+                      aria-label={
+                        time.isDisabled
+                          ? `${time.label} - unavailable`
+                          : time.label
+                      }
                     >
                       {time.label}
                     </SelectItem>

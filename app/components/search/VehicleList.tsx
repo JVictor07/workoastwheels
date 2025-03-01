@@ -69,7 +69,7 @@ export function VehicleList() {
 
   if (searchResponse.vehicles.length === 0) {
     return (
-      <div 
+      <div
         className="flex justify-center items-center h-32"
         role="status"
         aria-live="polite"
@@ -83,20 +83,18 @@ export function VehicleList() {
 
   return (
     <section aria-label="Vehicle search results">
-      <div 
+      <div
         className="mb-4 text-sm text-muted-foreground"
         role="status"
         aria-live="polite"
       >
-        {searchResponse.pagination.totalItems === 0 ? (
-          "No vehicles found"
-        ) : searchResponse.pagination.totalItems === 1 ? (
-          "1 vehicle found"
-        ) : (
-          `${searchResponse.pagination.totalItems} vehicles found`
-        )}
+        {searchResponse.pagination.totalItems === 0
+          ? "No vehicles found"
+          : searchResponse.pagination.totalItems === 1
+            ? "1 vehicle found"
+            : `${searchResponse.pagination.totalItems} vehicles found`}
       </div>
-      <div 
+      <div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         role="list"
         aria-label="Available vehicles"

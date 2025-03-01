@@ -6,7 +6,7 @@ export interface VehicleDetailsProps {
 
 export function VehicleDetails({ vehicle }: VehicleDetailsProps) {
   return (
-    <div 
+    <div
       className="flex flex-col md:flex-row items-center gap-8"
       aria-labelledby="vehicle-title"
     >
@@ -18,26 +18,32 @@ export function VehicleDetails({ vehicle }: VehicleDetailsProps) {
         />
       </div>
       <div className="flex flex-col ml-4 items-center md:items-start">
-        <h2 
+        <h2
           id="vehicle-title"
           className="text-3xl font-bold text-center md:text-left leading-tight"
         >
           {vehicle.make} {vehicle.model}
         </h2>
-        <dl 
+        <dl
           className="max-w-lg md:max-w-unset grid grid-cols-3 gap-12 mt-4"
           aria-label="Vehicle specifications"
         >
           <div>
-            <dt className="text-sm text-gray-600" id="year-label">Year</dt>
+            <dt className="text-sm text-gray-600" id="year-label">
+              Year
+            </dt>
             <dd aria-labelledby="year-label">{vehicle.year}</dd>
           </div>
           <div>
-            <dt className="text-sm text-gray-600" id="passengers-label">Passengers</dt>
+            <dt className="text-sm text-gray-600" id="passengers-label">
+              Passengers
+            </dt>
             <dd aria-labelledby="passengers-label">{vehicle.max_passengers}</dd>
           </div>
           <div>
-            <dt className="text-sm text-gray-600" id="class-label">Class</dt>
+            <dt className="text-sm text-gray-600" id="class-label">
+              Class
+            </dt>
             <dd aria-labelledby="class-label">{vehicle.classification}</dd>
           </div>
         </dl>
