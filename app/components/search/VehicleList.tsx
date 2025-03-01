@@ -3,7 +3,8 @@ import { useFormContext } from "react-hook-form";
 import { combineDateTime, FormValues } from "@/components/search/form.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
+import { VehicleCard } from "./VehicleCard";
+import type { Vehicle } from "@/trpc.ts";
 
 function PaginationButtons({ data }: { data: Pagination }) {
   const form = useFormContext<FormValues>();
@@ -78,31 +79,22 @@ export function VehicleList() {
 
   return (
     <div>
-      <ul className="space-y-4">
-        {searchResponse.vehicles.map((vehicle) => {
-          const bookNowParams = new URLSearchParams({
-            id: vehicle.id,
-            start: startDateTime.toISOString(),
-            end: endDateTime.toISOString(),
-          });
-
+      <div className="mb-4 text-sm text-muted-foreground">
+        {searchResponse.pagination.totalItems === 0 ? (
+          "No vehicles found"
+        ) : searchResponse.pagination.totalItems === 1 ? (
+          "1 vehicle found"
+        ) : (
+          `${searchResponse.pagination.totalItems} vehicles found`
+        )}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {searchResponse.vehicles.map((vehicle: Vehicle) => {
           return (
-            <div key={vehicle.id} className="flex gap-6 items-center">
-              {vehicle.make} {vehicle.model}
-              <Button asChild className="mt-2 w-full sm:w-auto">
-                <Link
-                  to={{
-                    pathname: "review",
-                    search: bookNowParams.toString(),
-                  }}
-                >
-                  Book now
-                </Link>
-              </Button>
-            </div>
+            <VehicleCard key={vehicle.id} vehicle={vehicle} />
           );
         })}
-      </ul>
+      </div>
       <PaginationButtons data={searchResponse.pagination} />
     </div>
   );
