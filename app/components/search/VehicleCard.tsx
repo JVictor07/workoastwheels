@@ -39,7 +39,12 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   );
 
   return (
-    <Card key={vehicle.id} className="w-full" role="article" aria-labelledby={`vehicle-title-${vehicle.id}`}>
+    <Card 
+      role="article" 
+      key={vehicle.id} 
+      aria-labelledby={`vehicle-title-${vehicle.id}`}
+      className="w-full transition-all duration-300 ease-in-out border hover:border-black/50 hover:shadow-md" 
+    >
       <CardHeader>
         <CardTitle className="text-xl" id={`vehicle-title-${vehicle.id}`}>
           {vehicle.make} {vehicle.model}
