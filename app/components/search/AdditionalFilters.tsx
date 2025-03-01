@@ -30,10 +30,16 @@ import { trpc } from "@/trpc";
 import { useDebouncedCallback } from "use-debounce";
 import { useState } from "react";
 
+interface VehicleOptions {
+  makes: string[];
+  classifications: string[];
+  passengerCounts: number[];
+}
+
 export function AdditionalFilters() {
   const form = useFormContext<FormValues>();
-  const [optionsResponse] = trpc.vehicles.options.useSuspenseQuery();
   const [localPriceRange, setLocalPriceRange] = useState(form.getValues("price"));
+  const [optionsResponse] = trpc.vehicles.options.useSuspenseQuery<VehicleOptions>();
 
   const debouncedFormPriceChange = useDebouncedCallback(
     (value: [number, number]) => {
@@ -87,7 +93,7 @@ export function AdditionalFilters() {
                 <SelectValue placeholder="Select minimum passengers" />
               </SelectTrigger>
               <SelectContent>
-                {optionsResponse.passengerCounts.map((count) => (
+                {optionsResponse.passengerCounts.map((count: number) => (
                   <SelectItem key={count} value={count.toString()}>
                     {count} passengers
                   </SelectItem>
