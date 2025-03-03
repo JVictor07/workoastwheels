@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/classnames";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { trpc } from "@/trpc";
@@ -56,12 +56,37 @@ export function AdditionalFilters() {
     debouncedFormPriceChange(value);
   };
 
+  const handleResetFilters = () => {
+    form.reset((prev) => ({
+      ...prev,
+      minPassengers: 1,
+      classification: [],
+      make: [],
+      price: [10, 100],
+      page: 1,
+    }));
+    setLocalPriceRange([10, 100]);
+  };
+
   return (
     <div
       className="space-y-6"
       role="group"
       aria-label="Additional search filters"
     >
+      <div className="flex justify-between items-center">
+        <h3 className="font-medium">Filters</h3>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleResetFilters}
+          className="text-muted-foreground hover:text-foreground"
+          aria-label="Reset all filters"
+        >
+          <RotateCcw className="h-4 w-4 mr-2" />
+          Reset
+        </Button>
+      </div>
       <FormField
         control={form.control}
         name="price"

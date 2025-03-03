@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { useMemo } from "react";
 import { VehicleCard } from "./VehicleCard";
 import type { Vehicle } from "@/trpc.ts";
+import { ErrorFallback } from "../ErrorFallback";
 
 function PaginationButtons({ data }: { data: Pagination }) {
   const form = useFormContext<FormValues>();
@@ -66,6 +67,10 @@ export function VehicleList() {
       keepPreviousData: true,
     },
   );
+
+  if (startDateTime >= endDateTime) {
+    return <ErrorFallback message="End date cannot be before or equal to start date" />;
+  }
 
   if (searchResponse.vehicles.length === 0) {
     return (
